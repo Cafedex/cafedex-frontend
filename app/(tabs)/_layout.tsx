@@ -10,7 +10,8 @@ const Layout = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
         tabBarLabelStyle: {
-          fontFamily: 'mon-sb',
+          fontFamily: 'mon',
+          top:10,
         },
         tabBarStyle:{
           backgroundColor: '#ffffff',
@@ -20,19 +21,23 @@ const Layout = () => {
           left: 20,
           right:20,
           elevation:0
-        }
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
+          tabBarIconStyle: { top: 15},
           tabBarLabel: 'Map',
           headerShown: false,
-          tabBarIcon: ({ size, color }) => <Ionicons name="map-outline" size={size} color={color} />,
+          tabBarIcon: ({ size, color }) => (
+          <Ionicons name="map-outline" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="collection"
         options={{
+          tabBarIconStyle: { top: 15},
           tabBarLabel:'Collection',
           headerShown: false,
           tabBarIcon: ({ size, color }) => (
@@ -43,8 +48,8 @@ const Layout = () => {
       <Tabs.Screen
         name="profile"
         options={{
+          tabBarIconStyle: { top: 15},
           tabBarLabel: 'Profile',
-
           headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="person-circle-outline" size={size} color={color} />
