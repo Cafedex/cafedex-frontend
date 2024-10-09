@@ -84,6 +84,21 @@ function RootLayoutNav() {
           ),
         }}
       />
+      <Stack.Screen 
+        name="(modals)/inbox"
+        options={{
+          presentation: 'modal',
+          title: 'Inbox',
+          headerTitleStyle: {
+            fontFamily: 'mon',
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <Ionicons name="close-outline" size={28} />
+            </TouchableOpacity>
+          )
+        }}
+      />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       {/* <Stack.Screen name="listing/[id]" options={{ headerTitle: '' }} />
       <Stack.Screen

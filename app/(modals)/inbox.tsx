@@ -1,37 +1,19 @@
 import Colors from '@/constants/Colors';
 import { useOAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
+import { useRouter, Stack } from 'expo-router';
+import { View, StyleSheet, TextInput, Text, TouchableOpacity} from 'react-native';
 import { defaultStyles } from '@/constants/Styles';
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
-
-
-enum Strategy {
-  Google = 'oauth_google',
-  Apple = 'oauth_apple',
-  Facebook = 'oauth_facebook',
-}
 
 const Page = () => {
   
   return (
     <View style={styles.container}>
- 
-      <View style={{ gap: 20 }}>
-
-        <Text>Testing</Text>
-      </View>
-
-
+      <Text>Testing Here</Text>
     </View>
-
-
-    
   )
 }
-
-export default Page;
 
 const styles = StyleSheet.create({
   container: {
@@ -68,3 +50,5 @@ const styles = StyleSheet.create({
     fontFamily: 'mon-sb',
   },
 });
+
+export default Page;
