@@ -99,6 +99,23 @@ function RootLayoutNav() {
           )
         }}
       />
+      <Stack.Screen 
+        name="cafe/[id]"
+        options={{
+          presentation: 'modal',
+          headerBackTitleVisible: false,
+          // headerBlurEffect: 'dark',
+          headerTitle: 'Cafe Details',
+          headerTitleStyle: {
+            fontFamily: 'mon',
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <Ionicons name="close-outline" size={28} />
+            </TouchableOpacity>
+          )
+        }}
+      />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       {/* <Stack.Screen name="listing/[id]" options={{ headerTitle: '' }} />
       <Stack.Screen

@@ -1,22 +1,33 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import React, { memo, useEffect, useRef } from 'react';
 import { defaultStyles } from '@/constants/Styles';
-import { Marker } from 'react-native-maps';
+import { Callout, Marker } from 'react-native-maps';
 import MapView from 'react-native-maps';
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import * as Location from 'expo-location';
+import MapSideBanner from './MapSideBanner';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 
 interface Props{
   cafes: any
 }
 
+export type Cafe = {
+  id: string,
+  name: string,
+  properties: {
+    latitude: number,
+    longitude:number
+  },
+}
+
 const INITIAL_REGION = {
   latitude: 37.33,
   longitude: -122,
-  latitudeDelta: 1,
-  longitudeDelta: 1,
+  latitudeDelta: 0.5,
+  longitudeDelta: 0.5,
 };
 
 const CafeMap = memo(({ cafes }: Props) => {
@@ -34,34 +45,44 @@ const CafeMap = memo(({ cafes }: Props) => {
     }
   };
 
-  const onMarkerSelected = (marker : any) => {
-    Alert.alert(marker)
+  const getLocation = async () => {
+    return Location.getLastKnownPositionAsync()
   }
+
+  const cafeID = 123;
 
   return (
     <View style={defaultStyles.container}>
-      <MapView
-      ref={mapRef}
-      style={StyleSheet.absoluteFillObject}
-      initialRegion={INITIAL_REGION}
-      mapType={'mutedStandard'}
-      showsUserLocation>
-        {cafes.locations.map((cafeLocation: any)=>(
+        <MapView
+        ref={mapRef}
+        style={StyleSheet.absoluteFillObject}
+        initialRegion={INITIAL_REGION}
+        // region={{null}}
+        mapType={'mutedStandard'}
+        showsUserLocation>
+          {cafes.locations.map((cafeLocation: Cafe)=>(
+          
 
-        <Marker
-          coordinate={{
-            latitude: cafeLocation.properties.latitude,
-            longitude: cafeLocation.properties.longitude,
-          }}
-          onPress={()=>{onMarkerSelected(cafeLocation.name)}}
-        >
-          <Image 
-          source={require('@/assets/images/Marker.png')}
-          style={styles.markerImage}
-          />
-        </Marker>
-        ))}
-      </MapView>
+            <Marker
+              coordinate={{
+                latitude: cafeLocation.properties.latitude,
+                longitude: cafeLocation.properties.longitude,
+              }}
+              key={cafeLocation.id}
+            >
+              <Link push href={{
+                pathname: '/cafe/[id]',
+                params: { id: cafeLocation.id }
+              }}>
+              <Image 
+              source={require('@/assets/images/Marker.png')}
+              style={styles.markerImage}
+              />          
+              </Link>
+            </Marker>
+
+          ))}
+        </MapView>
     </View>
   );
 });

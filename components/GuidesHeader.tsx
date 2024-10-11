@@ -27,7 +27,7 @@ interface Props {
   onCategoryChanged: (category: string) => void;
 }
 
-const GuidesHeader = ({ onCategoryChanged }:Props) => {
+const GuidesHeader = () => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -38,18 +38,10 @@ const GuidesHeader = ({ onCategoryChanged }:Props) => {
     selected?.measure((x)=> {
       scrollRef.current?.scrollTo({ x: x - 16, y: 0, animated: true});
     });
-    onCategoryChanged(categories[index].name);
   }
 
   return (
-    <SafeAreaView style={{flex:1, backgroundColor:'#fff'}}>
       <View style={styles.container}>
-        <View style={styles.actionRow}>
-          <TouchableOpacity style={styles.filterBtn}>
-            <Ionicons name="options-outline" size={24} />
-          </TouchableOpacity>
-        </View>
-
         <ScrollView
           horizontal
           ref={scrollRef}
@@ -68,27 +60,27 @@ const GuidesHeader = ({ onCategoryChanged }:Props) => {
               <Text>
                 {item.name}
               </Text>
+
             </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
-    </SafeAreaView>
   )
 }
 
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    height: 130,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    shadowOffset: {
-      width: 1,
-      height: 10,
-    },
+    // backgroundColor: '#fff',
+    // height: 130,
+    // elevation: 2,
+    // shadowColor: '#000',
+    // shadowOpacity: 0.1,
+    // shadowRadius: 6,
+    // shadowOffset: {
+    //   width: 1,
+    //   height: 10,
+    // },
   },
   actionRow: {
     flexDirection: 'row',
