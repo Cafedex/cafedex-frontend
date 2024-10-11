@@ -14,18 +14,46 @@ import { defaultStyles } from '@/constants/Styles';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { Link } from 'expo-router';
-import * as ImagePicker from 'expo-image-picker';
+import GuidesHeader from '@/components/GuidesHeader';
+import Animated from 'react-native-reanimated';
+import GuideGallery from '@/components/GuideGallery';
+
+
+interface Guide {
+  id: number,
+  name: string,
+  author: string,
+  category: string,
+  components?: Component[],
+}
+
+interface Component {
+  grinder?: string
+  weight?: number
+  time?: number
+}
+
+const initData = [
+  {id:0,"name":"V60","author":"HLMelton","category":"Pour-Over"},
+  {id:1,"name":"Kalita Wave","author":"HLMelton","category":"Pour-Over"},
+  {id:2,"name":"Hario Switch","author":"HLMelton","category":"Pour-Over"},
+  {id:3,"name":"French Press","author":"HLMelton","category":"French Press"},
+  {id:4,"name":"Slayer Ristretto","author":"HLMelton","category":"Espresso"},
+  {id:5,"name":"Aeropress","author":"HLMelton","category":"Aeropress"}
+]
 
 const Page = () => {
+
+  const loading = false;
+  const [guides, setGuides] = useState<Guide[]>(initData)
+
   return (
     <SafeAreaView>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Collection</Text>
       </View>
-
-      <Text>
-        You like Jazz?
-      </Text>
+      <GuidesHeader />
+      <GuideGallery currentCategory="Help" guides={initData} />
     </SafeAreaView>
   )
 }
@@ -59,11 +87,9 @@ const styles = StyleSheet.create({
     gap: 14,
     marginBottom: 24,
   },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: Colors.grey,
+  tileLabel: {
+    color: '#f8f9ff',
+    fontSize: 24,
   },
   editRow: {
     flex: 1,

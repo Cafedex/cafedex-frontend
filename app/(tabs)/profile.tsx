@@ -13,7 +13,7 @@ import { useAuth, useUser } from '@clerk/clerk-expo';
 import { defaultStyles } from '@/constants/Styles';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
-import { Link } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 
 const Page = () => {
   const { signOut, isSignedIn } = useAuth();
