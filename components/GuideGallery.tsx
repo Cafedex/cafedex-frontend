@@ -1,5 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity, Image, Alert } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 interface Guide {
@@ -28,27 +27,27 @@ const GuideGallery: React.FC<Props> = ({guides, currentCategory}) => {
   })
 
   const filterCategory = (currentCategory: string) => {
-    
+    guides.filter((guide)=>guide.category === currentCategory)
   }
 
   let loading = false;
     return (
-        <View style={styles.gridContainer}>
+        <View>
           { loading ? (
               <>        
                 <Text> Loading... </Text>
               </>
             ) : (
-              <>
-              {guides.map((guide, index)=>(
-                <TouchableOpacity style={styles.tile}>
-                  <View>
-                    <Text key={index}>{guide.name} by {guide.author}</Text> 
-                  </View>
-                </TouchableOpacity>
-                
-              ))}
-              </>
+                <View style={styles.tileContainer}>
+                {guides.map((guide, index)=>(
+                  <TouchableOpacity style={styles.tile} key={index}>
+                    <View key={index} style={{alignItems: 'center'}}>
+                      <Text style={styles.tileLabel}key={index}>{guide.name}</Text> 
+                      <Text style={{fontSize:10, top:5}}>{guide.author} </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+                </View>
             )}
         </View>
     )
@@ -58,35 +57,33 @@ export default GuideGallery
 
 
 const styles = StyleSheet.create({
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    paddingTop:16,
-  },
   tileContainer: {
-    width: '20%',
-    margin: '1%',
-    borderRadius: 16,
-    minHeight: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection:'row', 
+    flexWrap: 'wrap', 
+    justifyContent:'space-between',
+    padding:10,
   },
-  tile: {
-    flex: 1,
-    height: '100%',
-    width: ' 100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'#fff',
-    marginHorizontal:4,
-    marginTop:4
+  tile:{
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: {
+      width: 1,
+      height: 10,
+    },
+    flexBasis:'30%', 
+    height:128,
+    width:'100%', 
+    marginBottom:10,
+    marginHorizontal:5 , 
+    backgroundColor:'#ccc', 
+    justifyContent: 'center', 
+    alignItems:'center', 
+    borderRadius:15,
   },
   tileLabel: {
-    color: '#f8f9ff',
-    fontSize: 24,
+    fontSize: 15,
   },
 });
 

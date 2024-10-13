@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ScrollView
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useAuth, useUser } from '@clerk/clerk-expo';
@@ -17,6 +18,7 @@ import { Link } from 'expo-router';
 import GuidesHeader from '@/components/GuidesHeader';
 import Animated from 'react-native-reanimated';
 import GuideGallery from '@/components/GuideGallery';
+
 
 
 interface Guide {
@@ -48,27 +50,23 @@ const Page = () => {
   const [guides, setGuides] = useState<Guide[]>(initData)
 
   return (
-    <SafeAreaView>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>Collection</Text>
-      </View>
+    <>
+    {/* <SafeAreaView style={{flex: 1}}> */}
+
       <GuidesHeader />
-      <GuideGallery currentCategory="Help" guides={initData} />
-    </SafeAreaView>
+
+      <ScrollView>
+          <GuideGallery currentCategory="Help" guides={initData} />
+      </ScrollView>
+      
+    {/* </SafeAreaView> */}
+    </>
   )
 }
 
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 24,
-  },
-  header: {
-    fontFamily: 'mon-b',
-    fontSize: 24,
-  },
+
   card: {
     backgroundColor: '#fff',
     padding: 24,
