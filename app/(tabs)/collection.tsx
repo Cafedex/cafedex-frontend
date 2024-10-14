@@ -44,19 +44,42 @@ const initData = [
   {id:5,"name":"Aeropress","author":"HLMelton","category":"Aeropress"}
 ]
 
+const fetchGuides = async (): Promise<Guide[]> => {
+  const response = await fetch('http://localhost:8080/api/guides')
+  if(!response.ok){
+    throw new Error('Failed to fetch guides');
+  }
+  const data: Guide[] = await response.json()
+  return data;
+}
+
+const categories = [
+  { name: 'Pour-Over' },
+  { name: 'Espresso' },
+  { name: 'Cold Brew' },
+  { name: 'Aeropress' },
+  { name: 'French Press' },
+];
+
 const Page = () => {
 
   const loading = false;
-  const [guides, setGuides] = useState<Guide[]>(initData)
+  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0].name);
+  const [guides, setGuides] = useState<Guide[]>(initData);
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    console.log(`Category changed to: ${category}`);
+  };
 
   return (
     <>
     {/* <SafeAreaView style={{flex: 1}}> */}
 
-      <GuidesHeader />
+      <GuidesHeader categories={categories} onCategoryChanged={handleCategoryChange} />
 
       <ScrollView>
-          <GuideGallery currentCategory="Help" guides={initData} />
+          <GuideGallery currentCategory={selectedCategory} guides={initData} />
       </ScrollView>
       
     {/* </SafeAreaView> */}

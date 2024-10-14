@@ -24,10 +24,11 @@ const categories = [
 ];
 
 interface Props {
+  categories: { name: string }[];
   onCategoryChanged: (category: string) => void;
 }
 
-const GuidesHeader = () => {
+const GuidesHeader = ({ categories, onCategoryChanged }: Props) => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -35,8 +36,11 @@ const GuidesHeader = () => {
   const selectCategory = (index: number) => {
     const selected = itemsRef.current[index];
     setActiveIndex(index);
-    selected?.measure((x)=> {
-      scrollRef.current?.scrollTo({ x: x - 16, y: 0, animated: true});
+    
+    onCategoryChanged(categories[index].name);
+
+    selected?.measure((x) => {
+      scrollRef.current?.scrollTo({ x: x - 16, y: 0, animated: true });
     });
   }
 
@@ -46,28 +50,20 @@ const GuidesHeader = () => {
           <Text style={styles.header}>Collection</Text>
         </View>
         <ScrollView
-          horizontal
-          ref={scrollRef}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            alignItems: 'center',
-            gap: 20,
-            paddingHorizontal: 16,
-            paddingVertical: 1,
-          }}>
-          {categories.map((item, index)=>(
-            <TouchableOpacity
-            ref={(el) => (itemsRef.current[index]= el)}
+        horizontal
+        ref={scrollRef}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}>
+        {categories.map((item, index) => (
+          <TouchableOpacity
+            ref={(el) => (itemsRef.current[index] = el)}
             key={index}
             style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
-            onPress={()=> selectCategory(index)}>
-              <Text>
-                {item.name}
-              </Text>
-
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+            onPress={() => selectCategory(index)}>
+            <Text>{item.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
       </View>
   )
 }
@@ -88,6 +84,12 @@ const styles = StyleSheet.create({
     borderEndEndRadius:15,
     paddingVertical:25,
 
+  },
+  scrollContainer: {
+    alignItems: 'center',
+    gap: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 1,
   },
   headerContainer: {
     flexDirection: 'row',

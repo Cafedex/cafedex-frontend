@@ -21,36 +21,42 @@ interface Props {
 
 
 const GuideGallery: React.FC<Props> = ({guides, currentCategory}) => {
+  const [filteredGuides, setFilteredGuides] = useState<Guide[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
-    filterCategory(currentCategory)
-  })
+    setLoading(true);
+    
+    // Filter guides based on current category
+    const filtered = guides.filter((guide) => guide.category === currentCategory);
+    
+    setFilteredGuides(filtered);
+    // Simulate delay for loading effect
+    setTimeout(() => {
+      setLoading(false);
+    }, 500); // Adjust this time as needed
+  },[currentCategory, guides]);
 
-  const filterCategory = (currentCategory: string) => {
-    guides.filter((guide)=>guide.category === currentCategory)
-  }
-
-  let loading = false;
-    return (
-        <View>
-          { loading ? (
-              <>        
-                <Text> Loading... </Text>
-              </>
-            ) : (
-                <View style={styles.tileContainer}>
-                {guides.map((guide, index)=>(
-                  <TouchableOpacity style={styles.tile} key={index}>
-                    <View key={index} style={{alignItems: 'center'}}>
-                      <Text style={styles.tileLabel}key={index}>{guide.name}</Text> 
-                      <Text style={{fontSize:10, top:5}}>{guide.author} </Text>
-                    </View>
-                  </TouchableOpacity>
-                ))}
-                </View>
-            )}
+  return (
+    <View>
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : filteredGuides.length > 0 ? (
+        <View style={styles.tileContainer}>
+          {filteredGuides.map((guide) => (
+            <TouchableOpacity style={styles.tile} key={guide.id}>
+              <View style={{ alignItems: 'center' }}>
+                <Text style={styles.tileLabel}>{guide.name}</Text>
+                <Text style={{ fontSize: 10, top: 5 }}>{guide.author}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
-    )
+      ) : (
+        <Text>No guides available for {currentCategory}</Text>
+      )}
+    </View>
+  )
 }
 
 export default GuideGallery
