@@ -2,7 +2,7 @@ import Colors from '@/constants/Colors';
 import { useOAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, Stack, useLocalSearchParams } from 'expo-router';
-import { View, StyleSheet, TextInput, Text, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, TextInput, Text, TouchableOpacity, Image} from 'react-native';
 import { defaultStyles } from '@/constants/Styles';
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 
@@ -11,8 +11,16 @@ const Page = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Find a way to pass the data here for the cafe modal</Text>
-      <Text>Cafe ID: {id}</Text>
+      <Image 
+        style={{width:'100%', height: '30%', borderRadius:16}}         
+        source={{
+            uri: 'https://reactnative.dev/img/tiny_logo.png',
+          }} 
+      />   
+      <View style={{padding: 16, flexDirection: 'row'}}>
+        <Text>Cafe Name: </Text>
+        <Text>Cafe ID: {id}</Text>
+      </View>   
     </View>
   )
 }
