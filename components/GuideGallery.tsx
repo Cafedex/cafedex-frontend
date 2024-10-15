@@ -1,5 +1,6 @@
 import { View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'expo-router';
 
 interface Guide {
   id: number,
@@ -31,10 +32,10 @@ const GuideGallery: React.FC<Props> = ({guides, currentCategory}) => {
     const filtered = guides.filter((guide) => guide.category === currentCategory);
     
     setFilteredGuides(filtered);
-    // Simulate delay for loading effect
-    setTimeout(() => {
-      setLoading(false);
-    }, 500); // Adjust this time as needed
+    
+    // Simulate delay for loading effect by wrapping the line below in a timeout
+    setLoading(false);
+ 
   },[currentCategory, guides]);
 
   return (
@@ -45,10 +46,15 @@ const GuideGallery: React.FC<Props> = ({guides, currentCategory}) => {
         <View style={styles.tileContainer}>
           {filteredGuides.map((guide) => (
             <TouchableOpacity style={styles.tile} key={guide.id}>
-              <View style={{ alignItems: 'center' }}>
+              <Link push href={{
+                pathname:`/guide/[id]`,
+                params: {id:guide.id}
+              }}>
+              <View style={{ justifyContent:'center',alignItems: 'center', height: '100%', width:'100%'}}>
                 <Text style={styles.tileLabel}>{guide.name}</Text>
                 <Text style={{ fontSize: 10, top: 5 }}>{guide.author}</Text>
               </View>
+              </Link>
             </TouchableOpacity>
           ))}
         </View>
